@@ -1,6 +1,8 @@
+var width = 800
+var height = 600
 var game = new Phaser.Game(
-  800,
-  600,
+  width,
+  height,
   Phaser.AUTO,
   '',
   { preload: preload, create: create, update: update });
@@ -16,12 +18,22 @@ var paddle
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
   background = game.add.sprite(0, 0, 'background')
-  background.width = 800
-  background.height = 600
+  background.width = width
+  background.height = height
 
-  paddle = game.add.sprite(50, 500, 'breakout', 'paddle_blue.png')
-
+  paddle = game.add.sprite(0, 500, 'breakout', 'paddle_blue.png')
+  paddle.anchor.setTo(0.5, 0.5)
+  game.physics.enable(paddle, Phaser.Physics.ARCADE)
+  paddle.body.collideWorldBounds = true;
 }
 
 function update() {
+  var buffer = 32
+  paddle.x = game.input.x
+
+  if (paddle.x < buffer) {
+    paddle.x = buffer
+  } else if (paddle.x > (width - buffer)) {
+    paddle.x = (width - buffer)
+  }
 }
