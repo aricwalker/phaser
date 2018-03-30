@@ -28,8 +28,8 @@ function create() {
   game.physics.enable(paddle, Phaser.Physics.ARCADE)
   paddle.body.collideWorldBounds = true;
 
-ball = game.add.sprite(game.world.centerX, game.world.centerY, 'ball')
-ball.scale.setTo(.05, .05)
+  ball = game.add.sprite(game.world.centerX, game.world.centerY, 'ball')
+  ball.scale.setTo(0.04, 0.04)
 
 }
 
