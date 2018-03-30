@@ -10,10 +10,12 @@ var game = new Phaser.Game(
 function preload() {
   game.load.atlas('breakout', 'assets/breakout-set.png', 'assets/breakout-set.json')
   game.load.image('background', 'assets/starfield-bg.jpg')
+  game.load.image('ball', 'assets/ball.png')
 }
 
 var background
 var paddle
+var ball
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -21,10 +23,14 @@ function create() {
   background.width = width
   background.height = height
 
-  paddle = game.add.sprite(0, 500, 'breakout', 'paddle_blue.png')
+  paddle = game.add.sprite(game.world.centerX, 500, 'breakout', 'paddle_blue.png')
   paddle.anchor.setTo(0.5, 0.5)
   game.physics.enable(paddle, Phaser.Physics.ARCADE)
   paddle.body.collideWorldBounds = true;
+
+ball = game.add.sprite(game.world.centerX, game.world.centerY, 'ball')
+ball.scale.setTo(.05, .05)
+
 }
 
 function update() {
