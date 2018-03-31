@@ -19,6 +19,13 @@ var ball
 var gameStarted = false
 var baseSpeed = 50
 
+var brickRows = 4
+var bricksPerRow = 15
+
+var bricks
+var normalBrick
+var speedBrick
+
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
   background = game.add.sprite(0, 0, 'background')
@@ -37,6 +44,11 @@ function create() {
   ball.body.collideWorldBounds = true
   ball.body.bounce.set(1)
 
+  bricks = game.add.group()
+  bricks.enableBody = true
+  bricks.physicsBodyType = Phaser.Physics.ARCADE
+  createBricks()
+
   game.input.onDown.add(function() {
     if (gameStarted == false) {
       gameStarted = true
@@ -44,19 +56,6 @@ function create() {
       ball.body.velocity.y = Math.floor(Math.random() * -150) - baseSpeed
     }
   })
-}
-
-// Generate a random number,
-//  odd goes to the left
-//  even goes to the right
-// -1 for the left, 1 for the right
-function leftOrRight() {
-  random = Math.floor(Math.random() * 10)
-  if (random % 2 == 0) {
-    return 1
-  } else {
-    return -1
-  }
 }
 
 function update() {
@@ -74,6 +73,43 @@ function update() {
   }
 
   game.physics.arcade.collide(ball, paddle, ballAndPaddleCollide, null, this)
+}
+
+
+//============================================================================//
+
+function createBricks() {
+  var leftmostEdge = 55
+  var brickWidth = 45
+  var topmostEdge = 150
+  var verticalSpacing = 40
+
+  // Go through each row
+  for(var row = 0; row < brickRows; row++) {
+    // Go through the number of bricks per row
+    for(var brickIndex = 0; brickIndex < bricksPerRow; brickIndex++) {
+      // Create brick
+      normalBrick = bricks.create(
+        leftmostEdge + (brickWidth * brickIndex),
+        topmostEdge + (verticalSpacing * row),
+        'breakout',
+        'brick_blue.png')
+      normalBrick.scale.setTo(1.2, 1.2)
+    }
+  }
+}
+
+// Generate a random number,
+//  odd goes to the left
+//  even goes to the right
+// -1 for the left, 1 for the right
+function leftOrRight() {
+  random = Math.floor(Math.random() * 10)
+  if (random % 2 == 0) {
+    return 1
+  } else {
+    return -1
+  }
 }
 
 function ballAndPaddleCollide(_ball, _paddle) {
