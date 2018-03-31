@@ -16,6 +16,7 @@ function preload() {
 var background
 var paddle
 var ball
+var gameStarted = false
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -29,19 +30,26 @@ function create() {
   paddle.body.collideWorldBounds = true
   paddle.body.immovable = true
 
-  ball = game.add.sprite(game.world.centerX, game.world.centerY, 'ball')
+  ball = game.add.sprite(game.world.centerX, paddle.y - 25, 'ball')
   ball.scale.setTo(0.04, 0.04)
   game.physics.enable(ball, Phaser.Physics.ARCADE)
   ball.body.collideWorldBounds = true
   ball.body.bounce.set(1)
 
-  ball.body.velocity.x = 100
-  ball.body.velocity.y = 175
+  game.input.onDown.add(function() {
+    gameStarted = true
+    ball.body.velocity.x = Math.floor(Math.random() * 200)
+    ball.body.velocity.y = Math.floor(Math.random() * 200)
+  })
 }
 
 function update() {
   var buffer = 32
   paddle.x = game.input.x
+
+  if (!gameStarted) {
+    ball.x = game.input.x
+  }
 
   if (paddle.x < buffer) {
     paddle.x = buffer
@@ -49,5 +57,15 @@ function update() {
     paddle.x = (width - buffer)
   }
 
-  game.physics.arcade.collide(ball, paddle, function() {}, null, this)
+  game.physics.arcade.collide(ball, paddle, ballAndPaddleCollide, null, this)
+}
+
+function ballAndPaddleCollide(_ball, _paddle) {
+  if (_ball.x < _paddle.x) {
+    difference = _paddle.x - _ball.x
+    _ball.body.velocity.x = (-10 * difference)
+  } else {
+    difference = _ball.x - _paddle.x
+    _ball.body.velocity.x = (10 * difference)
+  }
 }
