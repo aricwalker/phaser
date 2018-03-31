@@ -17,6 +17,7 @@ var background
 var paddle
 var ball
 var gameStarted = false
+var baseSpeed = 50
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -37,10 +38,25 @@ function create() {
   ball.body.bounce.set(1)
 
   game.input.onDown.add(function() {
-    gameStarted = true
-    ball.body.velocity.x = Math.floor(Math.random() * 200)
-    ball.body.velocity.y = Math.floor(Math.random() * 200)
+    if (gameStarted == false) {
+      gameStarted = true
+      ball.body.velocity.x = Math.floor(Math.random() * leftOrRight() * 150)
+      ball.body.velocity.y = Math.floor(Math.random() * -150) - baseSpeed
+    }
   })
+}
+
+// Generate a random number,
+//  odd goes to the left
+//  even goes to the right
+// -1 for the left, 1 for the right
+function leftOrRight() {
+  random = Math.floor(Math.random() * 10)
+  if (random % 2 == 0) {
+    return 1
+  } else {
+    return -1
+  }
 }
 
 function update() {
