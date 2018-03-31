@@ -26,11 +26,16 @@ function create() {
   paddle = game.add.sprite(game.world.centerX, 500, 'breakout', 'paddle_blue.png')
   paddle.anchor.setTo(0.5, 0.5)
   game.physics.enable(paddle, Phaser.Physics.ARCADE)
-  paddle.body.collideWorldBounds = true;
+  paddle.body.collideWorldBounds = true
 
   ball = game.add.sprite(game.world.centerX, game.world.centerY, 'ball')
   ball.scale.setTo(0.04, 0.04)
+  game.physics.enable(ball, Phaser.Physics.ARCADE)
+  ball.body.collideWorldBounds = true
+  ball.body.bounce.set(1)
 
+  ball.body.velocity.x = 100
+  ball.body.velocity.y = 175
 }
 
 function update() {
