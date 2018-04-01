@@ -24,9 +24,9 @@
       "filename": "brick_blue.png",
       "frame": {
         "x": 0,
-        "y": 0,
+        "y": 4,
         "w": 40,
-        "h": 24
+        "h": 20
       },
       "rotated": false,
       "trimmed": false,
@@ -34,11 +34,71 @@
         "x": 0,
         "y": 0,
         "w": 40,
-        "h": 24
+        "h": 20
       },
       "sourceSize": {
         "w": 40,
-        "h": 24
+        "h": 20
+      }
+    },{
+      "filename": "brick_green.png",
+      "frame": {
+        "x": 0,
+        "y": 24,
+        "w": 40,
+        "h": 20
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 20
+      },
+      "sourceSize": {
+        "w": 40,
+        "h": 20
+      }
+    },{
+      "filename": "brick_red.png",
+      "frame": {
+        "x": 0,
+        "y": 44,
+        "w": 40,
+        "h": 20
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 20
+      },
+      "sourceSize": {
+        "w": 40,
+        "h": 20
+      }
+    },{
+      "filename": "brick_purple.png",
+      "frame": {
+        "x": 0,
+        "y": 64,
+        "w": 40,
+        "h": 20
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 20
+      },
+      "sourceSize": {
+        "w": 40,
+        "h": 20
       }
     }
   ],

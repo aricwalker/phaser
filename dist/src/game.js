@@ -82,7 +82,7 @@ function createBricks() {
   var leftmostEdge = 55
   var brickWidth = 45
   var topmostEdge = 150
-  var verticalSpacing = 40
+  var verticalSpacing = 45
 
   // Go through each row
   for(var row = 0; row < brickRows; row++) {
@@ -93,9 +93,22 @@ function createBricks() {
         leftmostEdge + (brickWidth * brickIndex),
         topmostEdge + (verticalSpacing * row),
         'breakout',
-        'brick_blue.png')
+        colorForRow(row))
       normalBrick.scale.setTo(1.2, 1.2)
     }
+  }
+}
+
+// row: 0 - first row, 1 - second row, etc..
+function colorForRow(row) {
+  if (row == 0) {
+    return 'brick_blue.png'
+  } else if (row == 1) {
+    return 'brick_green.png'
+  } else if (row == 2) {
+    return 'brick_red.png'
+  } else if (row == 3) {
+    return 'brick_purple.png'
   }
 }
 
