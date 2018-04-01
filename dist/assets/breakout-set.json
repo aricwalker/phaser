@@ -23,7 +23,7 @@
     },{
       "filename": "brick_blue.png",
       "frame": {
-        "x": 0,
+        "x": 4,
         "y": 4,
         "w": 40,
         "h": 20
@@ -43,7 +43,7 @@
     },{
       "filename": "brick_green.png",
       "frame": {
-        "x": 0,
+        "x": 4,
         "y": 24,
         "w": 40,
         "h": 20
@@ -63,7 +63,7 @@
     },{
       "filename": "brick_red.png",
       "frame": {
-        "x": 0,
+        "x": 4,
         "y": 44,
         "w": 40,
         "h": 20
@@ -83,8 +83,28 @@
     },{
       "filename": "brick_purple.png",
       "frame": {
-        "x": 0,
+        "x": 4,
         "y": 64,
+        "w": 40,
+        "h": 20
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 20
+      },
+      "sourceSize": {
+        "w": 40,
+        "h": 20
+      }
+    },{
+      "filename": "brick_speed.png",
+      "frame": {
+        "x": 224,
+        "y": 44,
         "w": 40,
         "h": 20
       },

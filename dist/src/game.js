@@ -21,6 +21,7 @@ var baseSpeed = 100
 
 var brickRows = 4
 var bricksPerRow = 15
+var speedBrickIndex = Math.floor(Math.random() * 60)
 
 var bricks
 var normalBrick
@@ -77,7 +78,7 @@ function update() {
 //============================================================================//
 
 function createBricks() {
-  var leftmostEdge = 55
+  var leftmostEdge = 60
   var brickWidth = 45
   var topmostEdge = 150
   var verticalSpacing = 45
@@ -90,16 +91,27 @@ function createBricks() {
   for(var row = 0; row < brickRows; row++) {
     // Go through the number of bricks per row
     for(var brickIndex = 0; brickIndex < bricksPerRow; brickIndex++) {
+      var brickNumber = ((row * bricksPerRow) + brickIndex)
+
       // Create brick
       normalBrick = bricks.create(
         leftmostEdge + (brickWidth * brickIndex),
         topmostEdge + (verticalSpacing * row),
         'breakout',
-        colorForRow(row))
+        colorForBrick(brickNumber, row))
       normalBrick.scale.setTo(1.2, 1.2)
       normalBrick.body.bounce.set(1);
       normalBrick.body.immovable = true;
     }
+  }
+}
+
+function colorForBrick(brickNumber, row) {
+  console.log(brickNumber)
+  if (speedBrickIndex == brickNumber) {
+    return 'brick_speed.png'
+  } else {
+    return colorForRow(row)
   }
 }
 
@@ -141,4 +153,9 @@ function ballAndPaddleCollide(_ball, _paddle) {
 
 function ballAndBrickCollide(_ball, _brick) {
   _brick.kill()
+}
+
+function doubleSpeed() {
+  ball.body.velocity.y += ball.body.velocity.y
+  ball.body.velocity.x += ball.body.velocity.y
 }
