@@ -104,6 +104,8 @@ function createBricks() {
       normalBrick.body.immovable = true;
     }
   }
+
+  bricks.children[speedBrickIndex].speedBrick = true
 }
 
 function colorForBrick(brickNumber, row) {
@@ -153,6 +155,9 @@ function ballAndPaddleCollide(_ball, _paddle) {
 
 function ballAndBrickCollide(_ball, _brick) {
   _brick.kill()
+  if (_brick.speedBrick) {
+    doubleSpeed()
+  }
 }
 
 function doubleSpeed() {
