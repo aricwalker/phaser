@@ -17,7 +17,7 @@ var background
 var paddle
 var ball
 var gameStarted = false
-var baseSpeed = 50
+var baseSpeed = 100
 
 var brickRows = 4
 var bricksPerRow = 15
@@ -49,7 +49,7 @@ function create() {
   game.input.onDown.add(function() {
     if (gameStarted == false) {
       gameStarted = true
-      ball.body.velocity.x = Math.floor(Math.random() * leftOrRight() * 150)
+      ball.body.velocity.x = Math.floor(Math.random() * leftOrRight() * 200)
       ball.body.velocity.y = Math.floor(Math.random() * -150) - baseSpeed
     }
   })
@@ -70,7 +70,7 @@ function update() {
   }
 
   game.physics.arcade.collide(ball, paddle, ballAndPaddleCollide, null, this)
-  game.physics.arcade.collide(ball, bricks, function() {}, null, this)
+  game.physics.arcade.collide(ball, bricks, ballAndBrickCollide, null, this)
 }
 
 
@@ -137,4 +137,8 @@ function ballAndPaddleCollide(_ball, _paddle) {
     difference = _ball.x - _paddle.x
     _ball.body.velocity.x = (10 * difference)
   }
+}
+
+function ballAndBrickCollide(_ball, _brick) {
+  _brick.kill()
 }
