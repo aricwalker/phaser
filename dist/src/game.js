@@ -44,9 +44,6 @@ function create() {
   ball.body.collideWorldBounds = true
   ball.body.bounce.set(1)
 
-  bricks = game.add.group()
-  bricks.enableBody = true
-  bricks.physicsBodyType = Phaser.Physics.ARCADE
   createBricks()
 
   game.input.onDown.add(function() {
@@ -73,6 +70,7 @@ function update() {
   }
 
   game.physics.arcade.collide(ball, paddle, ballAndPaddleCollide, null, this)
+  game.physics.arcade.collide(ball, bricks, function() {}, null, this)
 }
 
 
@@ -83,6 +81,10 @@ function createBricks() {
   var brickWidth = 45
   var topmostEdge = 150
   var verticalSpacing = 45
+
+  bricks = game.add.group()
+  bricks.enableBody = true
+  bricks.physicsBodyType = Phaser.Physics.ARCADE
 
   // Go through each row
   for(var row = 0; row < brickRows; row++) {
@@ -95,6 +97,8 @@ function createBricks() {
         'breakout',
         colorForRow(row))
       normalBrick.scale.setTo(1.2, 1.2)
+      normalBrick.body.bounce.set(1);
+      normalBrick.body.immovable = true;
     }
   }
 }
