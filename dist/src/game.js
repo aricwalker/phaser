@@ -29,6 +29,8 @@ var speedBrick
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
+  game.physics.arcade.checkCollision.down = false
+
   background = game.add.sprite(0, 0, 'background')
   background.width = width
   background.height = height
@@ -44,6 +46,8 @@ function create() {
   game.physics.enable(ball, Phaser.Physics.ARCADE)
   ball.body.collideWorldBounds = true
   ball.body.bounce.set(1)
+  ball.checkWorldBounds = true
+  ball.events.onOutOfBounds.add(ballOutOfBounds, this)
 
   createBricks()
 
@@ -115,6 +119,10 @@ function colorForBrick(brickNumber, row) {
   } else {
     return colorForRow(row)
   }
+}
+
+function ballOutOfBounds() {
+  console.log("Ball went out of bounds!")
 }
 
 // row: 0 - first row, 1 - second row, etc..
