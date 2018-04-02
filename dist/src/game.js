@@ -78,10 +78,10 @@ function update() {
 //============================================================================//
 
 function createBricks() {
-  var leftmostEdge = 60
-  var brickWidth = 45
-  var topmostEdge = 150
-  var verticalSpacing = 45
+  var leftmostEdge = 95
+  var brickWidth = 40
+  var topmostEdge = 140
+  var verticalSpacing = 50
 
   bricks = game.add.group()
   bricks.enableBody = true
