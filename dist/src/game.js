@@ -122,7 +122,14 @@ function colorForBrick(brickNumber, row) {
 }
 
 function ballOutOfBounds() {
-  console.log("Ball went out of bounds!")
+  // Put the ball on paddle
+  ball.x = game.input.x
+  ball.y = paddle.y - 25
+  // Stop the ball
+  ball.body.velocity.x = 0
+  ball.body.velocity.y = 0
+  // Restart the game
+  gameStarted = false
 }
 
 // row: 0 - first row, 1 - second row, etc..
