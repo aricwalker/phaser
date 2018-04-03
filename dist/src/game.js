@@ -14,7 +14,8 @@ function preload() {
 }
 
 var livesText
-
+var scoreText
+var score = 0
 var background
 var paddle
 var ball
@@ -54,6 +55,7 @@ function create() {
   createBricks()
 
   livesText = game.add.text(680, 550, 'lives: 3', { font: "18px Arial", fill: "#ffffff" })
+  scoreText = game.add.text(60, 550, 'score: 0', {font: "18px Arial", fill: "#ffffff"})
 
   game.input.onDown.add(function() {
     if (gameStarted == false) {
@@ -110,12 +112,14 @@ function createBricks() {
         'breakout',
         colorForBrick(brickNumber, row))
       normalBrick.scale.setTo(1.2, 1.2)
-      normalBrick.body.bounce.set(1);
-      normalBrick.body.immovable = true;
+      normalBrick.body.bounce.set(1)
+      normalBrick.body.immovable = true
+      normalBrick.points = 10
     }
   }
 
   bricks.children[speedBrickIndex].speedBrick = true
+  bricks.children[speedBrickIndex].points = 100
 }
 
 function colorForBrick(brickNumber, row) {
@@ -188,6 +192,7 @@ function ballAndPaddleCollide(_ball, _paddle) {
 
 function ballAndBrickCollide(_ball, _brick) {
   _brick.kill()
+  updateScoreText(_brick)
   if (_brick.speedBrick) {
     doubleSpeed()
   }
@@ -195,6 +200,11 @@ function ballAndBrickCollide(_ball, _brick) {
 
 function updateLivesText() {
   livesText.text = "lives: " + lives
+}
+
+function updateScoreText(_brick) {
+  score += _brick.points
+  scoreText.text = "score: " + score
 }
 
 function doubleSpeed() {
