@@ -13,12 +13,14 @@ function preload() {
   game.load.image('ball', 'assets/ball.png')
 }
 
+var livesText
+
 var background
 var paddle
 var ball
 var gameStarted = false
 var baseSpeed = 100
-
+var lives = 3
 var brickRows = 4
 var bricksPerRow = 15
 var speedBrickIndex = Math.floor(Math.random() * 60)
@@ -51,11 +53,15 @@ function create() {
 
   createBricks()
 
+  livesText = game.add.text(680, 550, 'lives: 3', { font: "18px Arial", fill: "#ffffff" })
+
   game.input.onDown.add(function() {
     if (gameStarted == false) {
       gameStarted = true
       ball.body.velocity.x = Math.floor(Math.random() * leftOrRight() * 200)
       ball.body.velocity.y = Math.floor(Math.random() * -150) - baseSpeed
+      lives -= 1
+      updateLivesText()
     }
   })
 }
@@ -130,6 +136,18 @@ function ballOutOfBounds() {
   ball.body.velocity.y = 0
   // Restart the game
   gameStarted = false
+
+  if (lives == 0) {
+    resetGame()
+  }
+}
+
+function resetGame() {
+  lives = 3
+  updateLivesText()
+  bricks.killAll()
+  speedBrickIndex = Math.floor(Math.random() * 60)
+  createBricks()
 }
 
 // row: 0 - first row, 1 - second row, etc..
@@ -173,6 +191,10 @@ function ballAndBrickCollide(_ball, _brick) {
   if (_brick.speedBrick) {
     doubleSpeed()
   }
+}
+
+function updateLivesText() {
+  livesText.text = "lives: " + lives
 }
 
 function doubleSpeed() {
