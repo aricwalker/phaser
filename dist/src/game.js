@@ -20,7 +20,7 @@ var background
 var paddle
 var ball
 var gameStarted = false
-var baseSpeed = 100
+var baseSpeed = 125
 var lives = 3
 var brickRows = 4
 var bricksPerRow = 15
@@ -152,6 +152,8 @@ function resetGame() {
   bricks.killAll()
   speedBrickIndex = Math.floor(Math.random() * 60)
   createBricks()
+  score = 0
+  updateScoreText()
 }
 
 // row: 0 - first row, 1 - second row, etc..
@@ -192,7 +194,7 @@ function ballAndPaddleCollide(_ball, _paddle) {
 
 function ballAndBrickCollide(_ball, _brick) {
   _brick.kill()
-  updateScoreText(_brick)
+  updateScore(_brick)
   if (_brick.speedBrick) {
     doubleSpeed()
   }
@@ -202,8 +204,12 @@ function updateLivesText() {
   livesText.text = "lives: " + lives
 }
 
-function updateScoreText(_brick) {
+function updateScore(_brick) {
   score += _brick.points
+  updateScoreText()
+}
+
+function updateScoreText() {
   scoreText.text = "score: " + score
 }
 
