@@ -173,6 +173,7 @@ function resetBall() {
 }
 
 function resetGame() {
+  baseSpeed = 150
   lives = 3
   updateLivesText()
   bricks.killAll()
