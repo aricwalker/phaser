@@ -132,8 +132,8 @@ function createBricks() {
     }
   }
 
-  // bricks.children[speedBrickIndex].speedBrick = true
-  // bricks.children[speedBrickIndex].points = 25
+  bricks.children[speedBrickIndex].speedBrick = true
+  bricks.children[speedBrickIndex].points = 25
 }
 
 function colorForBrick(brickNumber, row) {
