@@ -11,6 +11,9 @@ function preload() {
   game.load.atlas('breakout', 'assets/breakout-set.png', 'assets/breakout-set.json')
   game.load.image('background', 'assets/starfield-bg.jpg')
   game.load.image('ball', 'assets/ball.png')
+
+  game.load.audio('collision', 'assets/collision.wav')
+  game.load.audio('speedBrickCollision', 'assets/speed_brick_collision.wav')
 }
 
 var levelPoints = 100
@@ -35,6 +38,9 @@ var speedBrickIndex = Math.floor(Math.random() * 60)
 var bricks
 var normalBrick
 var speedBrick
+
+var collision
+var speedBrickCollision
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE)
@@ -70,6 +76,9 @@ function create() {
   gameOverText.visible = false
   levelText = game.add.text(game.world.centerX, 550, 'level: ' + level, { font: "18px Arial", fill: "#ffffff" })
   levelText.anchor.setTo(0.5, 0)
+
+  collision = game.add.audio("collision")
+  speedBrickCollision = game.add.audio("speedBrickCollision")
 
   game.input.onDown.add(function() {
     if (gameStarted == false) {
@@ -221,7 +230,10 @@ function ballAndBrickCollide(_ball, _brick) {
   _brick.kill()
   updateScore(_brick)
   if (_brick.speedBrick) {
+    speedBrickCollision.play()
     doubleSpeed()
+  } else {
+    collision.play()
   }
 
   // Are there any bricks left?
@@ -235,6 +247,7 @@ function levelComplete() {
   resetBall()
   lives += 1
   level += 1
+  updateLivesText()
   updateLevelText()
   levelCompleteText.visible = true
   game.input.enabled = false
