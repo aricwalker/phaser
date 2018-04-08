@@ -13,8 +13,10 @@ function preload() {
   game.load.image('ball', 'assets/ball.png')
 }
 
+var levelPoints = 100
 var livesText
 var scoreText
+var levelText
 var score = 0
 var background
 var paddle
@@ -22,8 +24,8 @@ var ball
 var gameStarted = false
 var baseSpeed = 125
 var lives = 3
-var brickRows = 4
-var bricksPerRow = 15
+var brickRows = 1
+var bricksPerRow = 1
 var speedBrickIndex = Math.floor(Math.random() * 60)
 
 var bricks
@@ -56,6 +58,9 @@ function create() {
 
   livesText = game.add.text(680, 550, 'lives: 3', { font: "18px Arial", fill: "#ffffff" })
   scoreText = game.add.text(60, 550, 'score: 0', {font: "18px Arial", fill: "#ffffff"})
+  levelText = game.add.text(game.world.centerX, 250, 'Level Complete!', {font: "65px Arial", fill: "#ffffff"})
+  levelText.anchor.setTo(0.5, 0.5)
+  levelText.visible = false
 
   game.input.onDown.add(function() {
     if (gameStarted == false) {
@@ -118,8 +123,8 @@ function createBricks() {
     }
   }
 
-  bricks.children[speedBrickIndex].speedBrick = true
-  bricks.children[speedBrickIndex].points = 25
+  // bricks.children[speedBrickIndex].speedBrick = true
+  // bricks.children[speedBrickIndex].points = 25
 }
 
 function colorForBrick(brickNumber, row) {
@@ -132,6 +137,13 @@ function colorForBrick(brickNumber, row) {
 }
 
 function ballOutOfBounds() {
+  resetBall()
+  if (lives == 0) {
+    resetGame()
+  }
+}
+
+function resetBall() {
   // Put the ball on paddle
   ball.x = game.input.x
   ball.y = paddle.y - 25
@@ -140,10 +152,6 @@ function ballOutOfBounds() {
   ball.body.velocity.y = 0
   // Restart the game
   gameStarted = false
-
-  if (lives == 0) {
-    resetGame()
-  }
 }
 
 function resetGame() {
@@ -198,6 +206,25 @@ function ballAndBrickCollide(_ball, _brick) {
   if (_brick.speedBrick) {
     doubleSpeed()
   }
+
+  // Are there any bricks left?
+  if(bricks.countLiving() == 0) {
+    levelComplete()
+  }
+}
+
+function levelComplete() {
+  score += levelPoints
+  resetBall()
+  lives += 1
+  levelText.visible = true
+  game.input.enabled = false
+
+  window.setTimeout(function() {
+    levelText.visible = false
+    game.input.enabled = true
+    bricks.callAll("revive")
+  }, 5000)
 }
 
 function updateLivesText() {
