@@ -235,6 +235,7 @@ function levelComplete() {
   resetBall()
   lives += 1
   level += 1
+  updateLevelText()
   levelCompleteText.visible = true
   game.input.enabled = false
   baseSpeed += 10
@@ -243,6 +244,10 @@ function levelComplete() {
     game.input.enabled = true
     bricks.callAll("revive")
   }, gameDelay)
+}
+
+function updateLevelText() {
+  levelText.text = "level: " + level
 }
 
 function updateLivesText() {
