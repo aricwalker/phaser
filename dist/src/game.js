@@ -16,8 +16,10 @@ function preload() {
 var levelPoints = 100
 var livesText
 var scoreText
-var levelText
+var levelCompleteText
 var gameOverText
+var levelText
+var level = 0
 var score = 0
 var gameDelay = 4000
 var background
@@ -60,12 +62,14 @@ function create() {
 
   livesText = game.add.text(680, 550, 'lives: ' + lives, { font: "18px Arial", fill: "#ffffff" })
   scoreText = game.add.text(60, 550, 'score: ' + score, {font: "18px Arial", fill: "#ffffff"})
-  levelText = game.add.text(game.world.centerX, 250, 'Level Complete!', {font: "65px Arial", fill: "#ffffff"})
-  levelText.anchor.setTo(0.5, 0.5)
-  levelText.visible = false
+  levelCompleteText = game.add.text(game.world.centerX, 250, 'Level Complete!', {font: "65px Arial", fill: "#ffffff"})
+  levelCompleteText.anchor.setTo(0.5, 0.5)
+  levelCompleteText.visible = false
   gameOverText = game.add.text(game.world.centerX, 250, 'Game Over', {font: "65px Arial", fill: "#ffffff"})
   gameOverText.anchor.setTo(0.5, 0.5)
   gameOverText.visible = false
+levelText = game.add.text(game.world.centerX, 550, 'level: ' + level, { font: "18px Arial", fill: "#ffffff" })
+levelText.anchor.setTo(0.5, 0)
 
   game.input.onDown.add(function() {
     if (gameStarted == false) {
@@ -165,6 +169,7 @@ function resetGame() {
   bricks.killAll()
   speedBrickIndex = Math.floor(Math.random() * 60)
   score = 0
+  level = 0
   updateScoreText()
   gameOverText.visible = true
   game.input.enabled = false
@@ -229,11 +234,12 @@ function levelComplete() {
   score += levelPoints
   resetBall()
   lives += 1
-  levelText.visible = true
+  level += 1
+  levelCompleteText.visible = true
   game.input.enabled = false
-
+  baseSpeed += 10
   window.setTimeout(function() {
-    levelText.visible = false
+    levelCompleteText.visible = false
     game.input.enabled = true
     bricks.callAll("revive")
   }, gameDelay)
