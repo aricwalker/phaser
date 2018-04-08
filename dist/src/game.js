@@ -17,15 +17,17 @@ var levelPoints = 100
 var livesText
 var scoreText
 var levelText
+var gameOverText
 var score = 0
+var gameDelay = 4000
 var background
 var paddle
 var ball
 var gameStarted = false
 var baseSpeed = 125
-var lives = 3
-var brickRows = 1
-var bricksPerRow = 1
+var lives = 1
+var brickRows = 4
+var bricksPerRow = 15
 var speedBrickIndex = Math.floor(Math.random() * 60)
 
 var bricks
@@ -56,11 +58,14 @@ function create() {
 
   createBricks()
 
-  livesText = game.add.text(680, 550, 'lives: 3', { font: "18px Arial", fill: "#ffffff" })
-  scoreText = game.add.text(60, 550, 'score: 0', {font: "18px Arial", fill: "#ffffff"})
+  livesText = game.add.text(680, 550, 'lives: ' + lives, { font: "18px Arial", fill: "#ffffff" })
+  scoreText = game.add.text(60, 550, 'score: ' + score, {font: "18px Arial", fill: "#ffffff"})
   levelText = game.add.text(game.world.centerX, 250, 'Level Complete!', {font: "65px Arial", fill: "#ffffff"})
   levelText.anchor.setTo(0.5, 0.5)
   levelText.visible = false
+  gameOverText = game.add.text(game.world.centerX, 250, 'Game Over', {font: "65px Arial", fill: "#ffffff"})
+  gameOverText.anchor.setTo(0.5, 0.5)
+  gameOverText.visible = false
 
   game.input.onDown.add(function() {
     if (gameStarted == false) {
@@ -159,9 +164,16 @@ function resetGame() {
   updateLivesText()
   bricks.killAll()
   speedBrickIndex = Math.floor(Math.random() * 60)
-  createBricks()
   score = 0
   updateScoreText()
+  gameOverText.visible = true
+  game.input.enabled = false
+
+  window.setTimeout(function() {
+    gameOverText.visible = false
+    game.input.enabled = true
+    createBricks()
+  }, gameDelay)
 }
 
 // row: 0 - first row, 1 - second row, etc..
@@ -224,7 +236,7 @@ function levelComplete() {
     levelText.visible = false
     game.input.enabled = true
     bricks.callAll("revive")
-  }, 5000)
+  }, gameDelay)
 }
 
 function updateLivesText() {
