@@ -27,7 +27,7 @@ var paddle
 var ball
 var gameStarted = false
 var baseSpeed = 125
-var lives = 1
+var lives = 3
 var brickRows = 4
 var bricksPerRow = 15
 var speedBrickIndex = Math.floor(Math.random() * 60)
