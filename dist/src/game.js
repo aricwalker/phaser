@@ -26,7 +26,7 @@ var background
 var paddle
 var ball
 var gameStarted = false
-var baseSpeed = 125
+var baseSpeed = 150
 var lives = 3
 var brickRows = 4
 var bricksPerRow = 15
@@ -68,8 +68,8 @@ function create() {
   gameOverText = game.add.text(game.world.centerX, 250, 'Game Over', {font: "65px Arial", fill: "#ffffff"})
   gameOverText.anchor.setTo(0.5, 0.5)
   gameOverText.visible = false
-levelText = game.add.text(game.world.centerX, 550, 'level: ' + level, { font: "18px Arial", fill: "#ffffff" })
-levelText.anchor.setTo(0.5, 0)
+  levelText = game.add.text(game.world.centerX, 550, 'level: ' + level, { font: "18px Arial", fill: "#ffffff" })
+  levelText.anchor.setTo(0.5, 0)
 
   game.input.onDown.add(function() {
     if (gameStarted == false) {
